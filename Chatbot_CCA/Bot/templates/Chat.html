@@ -1,0 +1,440 @@
+{% load i18n %}
+
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Live Chat</title>
+  <style type="text/css">
+
+/* CSS Document */
+
+/* ---------- GENERAL ---------- */
+
+body {
+	background: #e9e9e9;
+	color: black;
+	font: 79%/1.5em "Verdana", Verdana;
+	margin: 0;
+}
+
+a { text-decoration: none; }
+
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+h4, h5 {
+	line-height: 1.5em;
+	margin: 0;
+}
+
+hr {
+	background: #e9e9e9;
+    border: 0;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 1px;
+    margin: 0;
+    min-height: 1px;
+}
+
+img {
+    border: 0;
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+input {
+	border: 0;
+	color: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: normal;
+    margin: 0;
+}
+
+p { margin: 0; }
+
+.clearfix { *zoom: 1; } /* For IE 6/7 */
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after { clear: both; }
+
+/* ---------- LIVE-CHAT ---------- */
+
+#live-chat {
+	position:fixed;
+    top: 45%;
+    left: 42.5%;
+    width:33em;
+    height:28em;
+    margin-top: -11em; /*set to a negative number 1/2 of your height*/
+    margin-left: -11em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+
+#live-chat header {
+	background: #0F8207;
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	cursor: pointer;
+	padding: 16px 24px;
+}
+
+#live-chat h4:before {
+	  bottom: 0;
+	  background: 	;
+	border-radius: 50%;
+	content: "";
+	display: inline-block;
+	height: 8px;
+	margin: 0 8px 0 0;
+	width: 8px;
+}
+
+#live-chat h4 {
+	font-size: 12px;
+}
+
+#live-chat h5 {
+	font-size: 10px;
+}
+
+#live-chat input[type="text"] {
+	border: 1px solid #ccc;
+	border-radius: 11px;
+	padding: 12px;
+	outline: none;
+	width: 334px;
+	  height: 56px;
+
+
+}
+
+.chat-message-counter {
+	background: #e62727;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	display: none;
+	font-size: 12px;
+	font-weight: bold;
+	height: 28px;
+	left: 0;
+	line-height: 28px;
+	margin: -15px 0 0 -15px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 28px;
+}
+
+.chat-close {
+	background: #010800;
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	float: right;
+	font-size: 10px;
+	height: 16px;
+	line-height: 16px;
+	margin: 2px 0 0 0;
+	text-align: center;
+	width: 16px;
+}
+
+.chat {
+	background: #fff;
+	  margin-bottom:-7px;
+}
+
+	  ul.chatmessage{
+	  width: 255px;
+	  }
+
+.chat-history {
+	height: 254px;
+	#padding: 10px 10px;
+	overflow-y: scroll;
+}
+
+.chat-message {
+	margin: 16px 0;
+}
+
+.chat-message img {
+	border-radius: 50%;
+	float: left;
+}
+
+.chat-message-content {
+	margin-left: 56px;
+}
+
+.chat-time {
+	float: right;
+	font-size: 10px;
+}
+
+.chat-feedback {
+	font-style: italic;
+	margin: 0 0 0 80px;
+}
+	  .left-col {
+    float: left;
+    width:10%;
+	  height:60px;
+}
+.center-col {
+    float: left;
+    width: 60%;
+	  padding-top:7px;
+
+}
+.right-col {
+    float: right;
+    width: 41px;
+	  height:51px;
+	  padding:26px;
+	  padding-left:48px;
+	  padding-right:0px;
+	  padding-top:11px;
+
+
+
+}
+	  .overlay {
+  position: absolute;
+  top: 129px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  width: 95%;
+  opacity: 0;
+  transition: .5s ease;
+	  background-color: #008CBA;
+
+}
+	  .left-col:hover .overlay {
+  opacity: 1;
+}
+
+	  .round.hollow a: {
+
+    color: red;
+    color: #000;
+    font-size: 23px;
+    padding: 10px 21px;
+    text-decoration: none;
+	  display:right;
+}
+
+	.bgstyle
+{
+	  {% load static %}
+background-image:url('{% static "/ctsbackground.png" %});
+background-repeat:no-repeat;
+background-size:200%;
+	  width: 1000px;
+	  height: 1000px;
+}
+
+input#fname{
+
+background-repeat:no-repeat;
+background-position:6px;
+border:1px solid #DADADA;
+margin-top:10px;
+padding-left:35px;
+width:310px;
+height:30px;
+font-size:14px;
+box-shadow:0 0 10px;
+}
+
+.total-title .user {
+    background-color: #efefef;
+    float: left;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.total-title .tbot {
+    color: white;
+    background-color: #A5D175;
+    float: right;
+    margin-top: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+
+	}
+
+	.total-title .user,
+.total-title .tbot {
+  display: inline-block;
+  padding: 15px 25px;
+  border-radius: 3px;
+  border: 1px solid #eee;
+  margin-bottom: 5px;
+  font-size: 16px;
+  clear: both;
+}
+
+
+	  </style>
+
+
+</head>
+
+  <body lang="en" >
+<head>
+
+	<meta charset="UTF-8">
+	<title>Live Chat</title>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Calibri:200,200">
+	</head>
+
+
+{% load static %}
+<div id="container">
+<div class="row" style="width: 100%; height: 100%;">
+
+		<img src="{% static "/carrierlattice.png" %}" style="width: 100%; height: 100%;"/>
+
+	</div>
+	  <div class="round hollow text-center" id="widget"  align="right" style="position: absolute;bottom: 40px;right: 25px;width: 80px;height: 80px;" onclick="displaychat()">
+			{% load static %}
+        <a href="#" id="addClass"><img src="{% static "/cca2.png" %}" width="100" height="100" style="padding-top: 0px;padding-right: 40px;width: 65px;"> </a>
+
+			<script>
+				function displaychat(){
+				var state = document.getElementById('live-chat');
+				var displaySetting = state.style.display;
+
+				 if (displaySetting == 'block') {
+				 	  state.style.display = 'none';
+				 }else{
+					  state.style.display = 'block';
+				 }
+				}
+			</script>
+        </div>
+</div>
+
+
+	<div id="live-chat">
+
+		<header class="clearfix">
+
+			<a href="#" class="chat-close" onclick (display = "none")>x</a>
+
+			<h4>Cognizant Technology Solutions</h4>
+
+			<span class="chat-message-counter">3</span>
+
+		</header>
+		<div class="container text-center">
+
+</div>
+		<div class="chat">
+			<div class="chat-history" id="chatting" style="padding-top: 0px;">
+				<div class="chat-message clearfix">
+					<div class="chat-message-content clearfix">
+						<b align="center">Welcome to Cognizant CCA Bot</b>
+					</div>
+				</div>
+<div style="height:100px; width:100px" class="total-title">
+	<table class="b-agent-demo_result-table">
+		<tbody>
+			<tr id="user">
+				<td id="result">
+					<div id="parent">
+					{% load static %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+  <ul class="chatmessage" id="imagesList" style="height:0px; width:370px">
+{% load static %}
+</ul>
+</div>
+				</div>
+				</div>
+
+				<form action="#" method= "GET">
+
+				<fieldset>
+
+					<div class="left-col">
+  <img id="logo1" src="{% static "/Lists1.png" %}" style="width:55px;height:55px;display:inline;vertical-align: inherit;padding-right:220px;padding-top:7px">
+<div class="overlay">
+    <!---<img id="logo2" src="{% static "/MenuList.png" %}"> ---->
+  </div>
+
+</div>
+			<div class="center-col">
+				<input id="fname" placeholder="Type your message here.." type="text"/>
+			</div>
+					{% load static %}
+
+				<div>
+<img id="logo" class="right-col" src="{% static "/sendbutton.png" %}"  onclick="toPython(document.getElementById('fname').value)"></img></div>
+
+</fieldset>
+							 <!-- JavaScript -->
+                        <script>
+								function toPython(input) {
+
+								<!--  $("<div />").html("").appendTo(".user").text(input);-->
+								{% load static %}
+								  $("#parent").append('<div class="user" id="userrequest" style="width:300px;color: black;background-color: #F4F6F7;float: right;font-size: 12px;margin-top: 15px;margin-right: 69px;margin-left: 15px;"><img id="logo" src="/static/Customer.png" <="" img="" style="padding-right: 258px;width: 25px;height: 26px;"></img>'+input+'</div>');
+
+								  $('#fname').val("");
+
+
+
+                                    $.ajax({
+                                        url: "http://127.0.0.1:8099/Bot/"+input+"/chatview",
+
+                                        type: 'GET',
+                                        dataType: 'text',
+                                        success: function (result) {
+                                            <!-- do something here -->
+
+                                          <!-- $('div.total-title').text(result); -->
+
+                                           <!-- $("<div />").html("").appendTo(".tbot").html(result);-->
+										   $("#parent").append('<div class="tbot" id="serverresponse" style="width:300px;color: black;font-size: 12px;background-color: #82E0AA;float: right;margin-top: 15px;margin-left: 80px;"><img id="logo" src="/static/support.png" <="" img="" style="padding-left: 275px;width: 25px;height: 26px;"></img>'+result+'</div>');
+                                        }
+                                    });
+                                }
+</script>
+					<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118977627-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118977627-1');
+</script>
+				</fieldset>
+			</form>
+			</div> <!-- end chat-history -->
+		</div> <!-- end chat -->
+	</div> <!-- end live-chat -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+</body>
+      <script src="https://app.engati.com/static/js/chat_widget.js"></script>
+      <script>EngtChat.init({"bot_key": "c5554528c7ab4231", "e":"p", "bot_name":"FlightBooking","welcome_msg":true});</script>
+</html>
